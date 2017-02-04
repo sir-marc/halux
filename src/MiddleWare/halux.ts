@@ -18,14 +18,6 @@ export const createHalux = (schemasWithLocation: SchemaWithLocationI[]) => {
 		
 			const { schema, location } = schemaFinder(halux.schema)
 
-			if (schema && schema.references) {
-				forEachReference(schema, (refSchema) => {
-					const { location: loc } = schemaFinder(refSchema);
-
-				})
-			} else {
-				console.warn(`your schema "${halux.schema.name}" could not be found, is undefined or has no references`)
-			}
 		}
 		// middleware is not needed
 		return next(action)

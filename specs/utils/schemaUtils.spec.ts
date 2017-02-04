@@ -56,27 +56,4 @@ describe('the schema utils', () => {
 			})
 		})
 	})
-
-	describe('forEachReference util', () => {
-		it('should be a function', () => {
-			expect(forEachReference).to.be.a('function');
-		})
-
-		it('should call the callback for each reference', () => {
-			const callback = sinon.spy();
-			expect(callback.calledOnce).to.be.false;
-			forEachReference(schemas[3], callback);
-			expect(callback).to.be.calledThrice
-		})
-
-		describe('handles undefined values', () => {
-			it('should work if schema is undefined', () => {
-				expect(forEachReference(undefined, (schema: SchemaI) => null)).to.be.undefined;
-			})
-			
-			it('should work if callback is undefined', () => {
-				expect(forEachReference(schemas[3], undefined)).to.be.undefined;
-			})
-		})
-	})
 })
