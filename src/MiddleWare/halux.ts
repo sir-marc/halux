@@ -1,6 +1,6 @@
 import { HaluxActionI } from '../interfaces/HaluxInterface';
 import { SchemaWithLocationI } from '../interfaces/SchemaInterface';
-import { findSchemaWithLocation, forEachReference } from '../utils/schemaUtils';
+import { findSchemaWithLocation } from '../utils/schemaUtils';
 
 
 interface ActionI extends HaluxActionI {

@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
 import { SchemaWithLocationI, SchemaI } from '../../src/interfaces/SchemaInterface';
-import { findSchemaWithLocation, forEachReference } from '../../src/utils/schemaUtils';
+import { findSchemaWithLocation } from '../../src/utils/schemaUtils';
 
 const schemas: SchemaI[] = [
 	{ name: 'schemaOne'},
