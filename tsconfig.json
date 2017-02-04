@@ -1,0 +1,30 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "outDir": "dist",
+        "target": "es5",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "jsx": "react",
+        "experimentalDecorators": true,
+				"moduleResolution": "node",
+				"lib": [
+					"es6",
+					"es2017",
+					"dom",
+					"scripthost"
+				],
+        "baseUrl": ".",
+        "paths": {
+          "js/*": ["src/js/*"],
+          "interfaces/*": ["src/js/interfaces/*"],
+          "elements/*": ["src/js/elements/*"],
+          "commons/*": ["src/js/commons/*"],
+          "style/*": ["src/assets/sass/*"]
+        },
+				"typeRoots": [
+					"node_modules/@types/"
+				]
+    }
+}

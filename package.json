@@ -1,0 +1,32 @@
+{
+  "name": "halux",
+  "version": "1.0.0",
+  "description": "Halux middleware for Redux",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sir-marc/halux.git"
+  },
+  "keywords": [
+    "HAL",
+    "HATEOAS",
+    "REDUX",
+    "MIDDLEWARE",
+    "REDUX-MIDDLEWARE",
+    "HAL-REDUX",
+    "HALUX"
+  ],
+  "author": "Marc Berli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sir-marc/halux/issues"
+  },
+  "homepage": "https://github.com/sir-marc/halux#readme",
+  "devDependencies": {
+    "typescript": "^2.1.5",
+    "typescript-loader": "^1.1.3"
+  }
+}
