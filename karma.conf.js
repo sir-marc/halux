@@ -65,7 +65,7 @@ module.exports = function(config) {
     concurrency: Infinity,
 
 		karmaTypescriptConfig: {
-			tsconfig: './tsconfig.json',
+			tsconfig: './tsconfig.test.json',
 			coverageOptions: {
 				exclude: /\.(d|spec|test)\.tsx?/,
 			},

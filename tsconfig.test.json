@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"outDir": "dist",
 		"target": "es5",
-		"sourceMap": false,
+		"sourceMap": true,
 		"noImplicitAny": true,
 		"module": "commonjs",
 		"experimentalDecorators": true,
@@ -18,9 +18,5 @@
 		"typeRoots": [
 			"node_modules/@types/"
 		]
-	},
-	"exclude": [
-		"node_modules",
-		"**/*.spec.ts"
-	]
+	}
 }
