@@ -1,46 +1,21 @@
-interface SchemaI {
-	name: string,
-	references?: {
-		[x:string]: SchemaI,
-	}
-}
-
-interface HaluxMetadataI {
-	go: boolean,
-	schema: SchemaI,
-	get?: SchemaI[],
-}
-
-interface HaluxActionI {
-	metadata: {
-		halux: HaluxMetadataI,
-	}
-}
+import { SchemaI, SchemaWithLocationI } from './interfaces/SchemaInterface';
+import { HaluxActionI } from './interfaces/HaluxInterface';
+import { findSchemaWithLocation } from './utils/schemaUtils';
 
 interface ActionI extends HaluxActionI {
 	type: string,
 	payload: any,
 }
 
-interface SchemaWithLocation {
-	schema: SchemaI,
-	location: string,
-}
-
-const createHalux = (schemasWithLocation: SchemaWithLocation[]) => {
-	const findSchemaWithLocation = (schema: SchemaI) => 
-		schemasWithLocation.filter(swl => swl.schema.name === schema.name)[0];
-
-	const forEachReference = (schema: SchemaI, callback: (schema: SchemaI) => any) => {
-		Object.keys(schema.references).forEach(key => callback(schema.references[key]))
-	}
+const createHalux = (schemasWithLocation: SchemaWithLocationI[]) => {
+	
 
 	return (store: any) => (next: any) => (action: ActionI) => {
 		if (action.metadata.halux.go) {
 			const { metadata, payload } = action;
 			const { halux } = metadata
 		
-			const { schema, location } = findSchemaWithLocation(halux.schema)
+			const { schema, location } = findSchemaWithLocation(schemasWithLocation, halux.schema)
 
 			if (schema && schema.references) {
 
