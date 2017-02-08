@@ -1,16 +1,17 @@
 {
   "name": "halux",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.0-development",
   "description": "Halux middleware for Redux",
   "main": "index.js",
   "scripts": {
     "test": "karma start",
-		"build": "tsc",
-    "dts-gen": "dts-bundle"
+    "build": "tsc",
+    "dts-gen": "dts-bundle",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sir-marc/halux.git"
+    "url": "https://github.com/sir-marc/halux.git"
   },
   "keywords": [
     "HAL",
@@ -40,6 +41,7 @@
     "karma-sinon": "^1.0.5",
     "karma-typescript": "^2.1.7",
     "mocha": "^3.2.0",
+    "semantic-release": "^6.3.2",
     "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0",
     "typescript": "^2.1.5",
@@ -48,5 +50,8 @@
   "dependencies": {
     "dts-bundle": "^0.7.2",
     "dts-gen": "^0.4.20"
-  }
+  },
+	"peerDependencies": {
+    "hal-crawler": "git+https://github.com/StuckiSimon/HalCrawler.git"
+	}
 }

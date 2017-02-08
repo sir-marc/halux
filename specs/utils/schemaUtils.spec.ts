@@ -1,21 +1,20 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
-import { SchemaWithLocationI, SchemaI } from '../../src/interfaces/SchemaInterface';
+import { SchemaWithLocationI } from '../../src/interfaces/SchemaInterface';
 import { findSchemaWithLocation } from '../../src/utils/schemaUtils';
+import * as Immutable from 'immutable';
+import { Schema } from 'hal-crawler';
 
-const schemas: SchemaI[] = [
-	{ name: 'schemaOne'},
-	{ name: 'schemaTwo'},
-	{ name: 'schemaThree'},
-	{
-		name: 'schemaWithReferences',
-		references: {
-			'subSchemaOne': { name: 'subSchemaOne' },
-			'subSchemaTwo': { name: 'subSchemaTwo' },
-			'subSchemaThree': { name: 'subSchemaThree' },
-		}
-	}
+const schemas: Schema[] = [
+	new Schema('schemaOne', ['id'], 'GET'),
+	new Schema('schemaOne', ['id'], 'GET'),
+	new Schema('schemaOne', ['id'], 'GET'),
+	new Schema('schemaWithReferences', ['id'], 'GET', [
+		new Schema('subSchemaOne', ['id'], 'GET'),
+		new Schema('subSchemaTwo', ['id'], 'GET'),
+		new Schema('subSchemaThree', ['id'], 'GET'),
+	]),
 ]
 
 const schemasWithLocation: SchemaWithLocationI[] = [
@@ -35,7 +34,7 @@ describe('the schema utils', () => {
 
 		describe('the returned method', () => {
 			
-			let finder: (schema: SchemaI) => SchemaWithLocationI;
+			let finder: (schema: Schema) => SchemaWithLocationI;
 
 			beforeEach(() => {
 				finder = findSchemaWithLocation(schemasWithLocation);
@@ -48,7 +47,7 @@ describe('the schema utils', () => {
 			})
 
 			it('should return undefined if a schema could not be found', () => {
-				expect(finder({ name: 'a schema which does not exist'})).to.eql(undefined);
+				expect(finder(new Schema('a schema which does not exist', ['id'], 'GET'))).to.eql(undefined);
 			})
 
 			it('should return undefined if undefined or something else is passed', () => {

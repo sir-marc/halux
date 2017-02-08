@@ -1,18 +1,12 @@
-import { HaluxActionI } from '../interfaces/HaluxInterface';
+import { HaluxActionI } from '../interfaces/HaluxActionInterface';
 import { SchemaWithLocationI } from '../interfaces/SchemaInterface';
 import { findSchemaWithLocation } from '../utils/schemaUtils';
-
-
-interface ActionI extends HaluxActionI {
-	type: string,
-	payload: any,
-}
+import { haluxSymbol } from './createHaluxAction';
 
 export const createHalux = (schemasWithLocation: SchemaWithLocationI[]) => {
-	return (store: any) => (next: any) => (action: ActionI) => {
-		if (action.metadata.halux.go) {
-			const { metadata, payload } = action;
-			const { halux } = metadata
+	return (store: any) => (next: any) => (action: HaluxActionI) => {
+		if ( action && action.payload &&action.payload[haluxSymbol]) {
+			const halux = action.payload[haluxSymbol]
 
 			const schemaFinder = findSchemaWithLocation(schemasWithLocation)
 		

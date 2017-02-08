@@ -1,11 +1,6 @@
-export interface SchemaI {
-	name: string,
-	references?: {
-		[x:string]: SchemaI,
-	}
-}
+import { Schema } from 'hal-crawler';
 
 export interface SchemaWithLocationI {
 	location: string,
-	schema: SchemaI,
+	schema: Schema,
 }

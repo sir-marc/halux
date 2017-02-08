@@ -1,6 +1,7 @@
-import { SchemaWithLocationI, SchemaI } from '../interfaces/SchemaInterface';
+import { SchemaWithLocationI } from '../interfaces/SchemaInterface';
+import { Schema } from 'hal-crawler';
 
 
 export const findSchemaWithLocation = (schemasWithLocation: SchemaWithLocationI[]) =>
-	(schema: SchemaI) =>
-		schema ? schemasWithLocation.filter(swl => swl.schema.name === schema.name)[0] : undefined;
+	(schema: Schema) =>
+		schema ? schemasWithLocation.filter(swl => swl.schema.getName() === schema.getName())[0] : undefined;
