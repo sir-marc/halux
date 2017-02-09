@@ -1,0 +1,6 @@
+type SET_STORE = 'HALUX/SET_STORE';
+const SET_STORE: SET_STORE = 'HALUX/SET_STORE'
+
+export {
+	SET_STORE
+}

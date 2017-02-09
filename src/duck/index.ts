@@ -1,0 +1,1 @@
+export { haluxReducer } from './haluxReducer';
