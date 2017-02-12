@@ -51,7 +51,7 @@
     "dts-bundle": "^0.7.2",
     "dts-gen": "^0.4.20"
   },
-	"peerDependencies": {
-    "hal-crawler": "git+https://github.com/StuckiSimon/HalCrawler.git"
-	}
+  "peerDependencies": {
+    "hal-crawler": "0.1.0-alpha.1"
+  }
 }
