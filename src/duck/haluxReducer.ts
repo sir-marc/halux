@@ -1,5 +1,5 @@
 import { HaluxSetStoreActionI } from './haluxDuckInterfaces';
-import { SET_STORE } from './halusTypes';
+import { SET_STORE } from './haluxTypes';
 
 export const haluxReducer = ( state: any = {}, action: HaluxSetStoreActionI) => {
 	switch(action.type) {
