@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
-import { createHaluxAction, haluxSymbol } from '../../src/middleWare/createHaluxAction';
+import { createHaluxAction, haluxSymbol } from '../../src/middleware/createHaluxAction';
 import { haluxActionType } from '../../src/constants/haluxActionType';
 import { HaluxActionObjectI } from '../../src/interfaces/HaluxActionInterface';
 
