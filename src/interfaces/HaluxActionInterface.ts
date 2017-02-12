@@ -6,9 +6,9 @@ export interface HaluxActionObjectI {
 		[index: string]: any,
 	},
 	handlers?: {
-		successHandler: (obj: any) => any,
-		pendingHandler: () => any,
-		errorHandler: (error: any) => any,
+		successHandler?: (obj: any) => any,
+		pendingHandler?: () => any,
+		errorHandler?: (error: any) => any,
 	}
 }
 
@@ -17,4 +17,8 @@ export interface HaluxActionI {
 	payload: {
 		[index: string]: HaluxActionObjectI
 	}
+}
+
+export interface HaluxActionCreatorI {
+	(obj: HaluxActionObjectI): HaluxActionI
 }
