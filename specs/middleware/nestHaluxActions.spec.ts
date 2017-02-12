@@ -4,31 +4,14 @@ import * as sinonChai from 'sinon-chai';
 import { nestHaluxActions } from 'src/middleWare/nestHaluxActions';
 import { createHaluxAction } from 'src/middleWare/createHaluxAction';
 
-const fetchClient = (id) => createHaluxAction({
-	schema: undefined,
-	identifiers: {
-		client: id,
-	},
-	handlers: {
-		errorHandler: undefined,
-	}
-})
-
-const fetchEmployee = (id) => createHaluxAction({
-	schema: undefined,
-	identifiers: {
-		employee: id,
-	},
-	handlers: {
-		errorHandler: undefined,
-	}
-})
 
 chai.use(sinonChai);
 
 describe('the nestActions helper', () => {
 	it('should return a function', () => {
-		expect(nestHaluxActions([fetchClient, fetchEmployee])).to.be.a('function');
+		const first = sinon.spy();
+		const second = sinon.spy();
+		expect(nestHaluxActions([first, second])).to.be.a('function');
 	})
 
 	describe('the returned function', () => {
