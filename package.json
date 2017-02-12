@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "karma start",
+    "test:w": "npm t -- --auto-watch --watch",
     "build": "tsc",
     "dts-gen": "dts-bundle",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
