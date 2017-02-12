@@ -13,6 +13,7 @@ module.exports = function(config) {
     files: [
       'specs/**/*.ts',
       'src/**/*.ts',
+			'node_modules/es6-symbol/index.js'
     ],
 
 
