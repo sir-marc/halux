@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
-import { haluxTypes, haluxActions } from '../../src/duck';
+import { haluxTypes, haluxActions } from 'src/duck';
 
 chai.use(sinonChai);
 
