@@ -1,2 +1,2 @@
-export { createHalux , createHaluxAction} from './MiddleWare';
+export { createHalux , createHaluxAction} from './middleWare';
 export { haluxReducer } from './duck';
