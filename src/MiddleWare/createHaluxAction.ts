@@ -1,9 +1,10 @@
 import { HaluxActionObjectI, HaluxActionI, HaluxActionCreatorI } from '../interfaces/HaluxActionInterface';
+import { haluxActionType } from '../constants/haluxActionType';
 
 export const haluxSymbol = Symbol('halux');
 
 export const createHaluxAction:HaluxActionCreatorI = (obj) => ({
-	type: 'HALUX/HALUX_ACTION',
+	type: haluxActionType,
 	payload: {
 		[haluxSymbol]: obj,
 	}

@@ -2,8 +2,6 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
 import { nestHaluxActions } from 'src/middleWare/nestHaluxActions';
-import { createHaluxAction } from 'src/middleWare/createHaluxAction';
-
 
 chai.use(sinonChai);
 
