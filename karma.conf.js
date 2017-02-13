@@ -1,6 +1,5 @@
 // Karma configuration
 // Generated on Sat Feb 04 2017 10:37:52 GMT+0100 (Mitteleuropäische Zeit)
-console.log('travis!!!!!!!!', process.env.TRAVIS, process.env.TRAVIS ? 'yes babe' : 'sorry bro')
 module.exports = function(config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -55,7 +54,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: process.env.TRAVIS ? ['Chrome_travis_ci'] : ['Chrome'],
+    browsers: ['Firefox'],//process.env.TRAVIS ? ['Chrome_travis_ci'] : ['Chrome'],
 
 		customLaunchers: {
       Chrome_travis_ci: {
