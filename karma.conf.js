@@ -1,5 +1,6 @@
 // Karma configuration
 // Generated on Sat Feb 04 2017 10:37:52 GMT+0100 (Mitteleuropäische Zeit)
+console.log('travis!!!!!!!!', process.env.TRAVIS, process.env.TRAVIS ? 'yes babe' : 'sorry bro')
 module.exports = function(config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
