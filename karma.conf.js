@@ -13,7 +13,7 @@ module.exports = function(config) {
     files: [
       'specs/**/*.ts',
       'src/**/*.ts',
-			'node_modules/es6-symbol/index.js'
+			//'node_modules/es6-symbol/index.js'
     ],
 
 
@@ -54,7 +54,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Firefox'],//process.env.TRAVIS ? ['Chrome_travis_ci'] : ['Chrome'],
+    browsers: ['Chrome_travis_ci'], // : ['Chrome'],
 
 		customLaunchers: {
       Chrome_travis_ci: {
