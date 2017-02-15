@@ -1,34 +1,42 @@
+import * as Immutable from 'immutable';
 import { HaluxActionI, HaluxActionObjectI } from '../interfaces/HaluxActionInterface';
 import { SchemaWithLocationI } from '../interfaces/SchemaInterface';
 import { findSchemaWithLocation } from '../utils/schemaUtils';
 import { haluxSymbol } from './createHaluxAction';
 import { crawl, HalCrawlerConfigMap, Resource, Command, getResourceFromStore, action } from 'hal-crawler';
-import * as Immutable from 'immutable';
+import { haluxActions } from '../duck';
 
 const scramble = (
 	config: HalCrawlerConfigMap,
+	done: (store: Immutable.Map<string, any>) => void,
 	command: Command,
 	actions: HaluxActionObjectI[],
-	store = Immutable.Map<string, any>()
-) => {
+	store = Immutable.Map<string, any>(),
+):any => {
 	if (command && actions && actions[0]) {
-		crawl(config, command, store).then(store => {
+		return crawl(config, command, store).then((store: any) => {
 			const [ head, ...tail ] = actions
-			const resources = store.get(head.schema.getName())
-			const resource = resources.toList(0).get(0);
-			scramble(config, new Command(resource, action.GET), tail, store);
+			const resource = getResourceFromStore(store, new Resource(head.schema, undefined, head.identifiers));
+			return scramble(config, done, new Command(resource, action.GET), tail, store);
 		})
 	} else {
-		return;
+		done(store);
 	}
 }
 
 export const createHalux = (halCrawlerConfig: HalCrawlerConfigMap) => {
 	return (store: any) => (next: any) => (action: HaluxActionI) => {
 		if ( action && action.payload && action.payload[haluxSymbol]) {
-			const haluxActions = action.payload[haluxSymbol]
-			const [ head, ...tail ] = haluxActions;
-			scramble(halCrawlerConfig, new Command(new Resource(head.schema)), tail, store.halux)
+			const actions = action.payload[haluxSymbol]
+			const [ head, ...tail ] = actions;
+
+			const done = (newStore: Immutable.Map<string, any>) => {
+				console.log(newStore.toJS())
+				store.dispatch(haluxActions.setStore(store))
+			}
+
+			scramble(halCrawlerConfig, done, new Command(new Resource(head.schema)), tail, store)
+			
 		}
 		// middleware is not needed
 		return next(action)
