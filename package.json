@@ -1,6 +1,6 @@
 {
   "name": "halux",
-  "version": "0.0.0-development",
+  "version": "0.0.0-beta.0",
   "description": "Halux middleware for Redux",
   "main": "dist/index.js",
   "scripts": {
