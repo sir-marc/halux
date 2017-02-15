@@ -17,7 +17,7 @@ describe('the createHaluxAction helper', () => {
 			schema: undefined,
 			identifiers: undefined,
 		}
-		expect(createHaluxAction(myObj).payload[haluxSymbol]).to.equal(myObj)
-		expect(createHaluxAction(myObj).payload[haluxSymbol]).to.eql(myObj)
+		expect(createHaluxAction(myObj).payload[haluxSymbol][0]).to.equal(myObj)
+		expect(createHaluxAction(myObj).payload[haluxSymbol][0]).to.eql(myObj)
 	})
 })

@@ -15,7 +15,7 @@ export interface HaluxActionObjectI {
 export interface HaluxActionI {
 	type: string,
 	payload: {
-		[index: string]: HaluxActionObjectI
+		[index: string]: HaluxActionObjectI[]
 	}
 }
 

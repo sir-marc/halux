@@ -6,6 +6,6 @@ export const haluxSymbol = Symbol('halux');
 export const createHaluxAction:HaluxActionCreatorI = (obj) => ({
 	type: haluxActionType,
 	payload: {
-		[haluxSymbol]: obj,
+		[haluxSymbol]: [obj],
 	}
 })
