@@ -3,6 +3,7 @@ import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
 import { nestHaluxActions } from '../../src/middleware/nestHaluxActions';
 import { createHaluxAction, haluxSymbol } from '../../src/middleware/createHaluxAction';
+import { haluxActionType } from '../../src/constants/haluxActionType'
 
 chai.use(sinonChai);
 
@@ -35,6 +36,14 @@ describe('the nestActions helper', () => {
 
 			const deepNest = ({clientId} : {clientId: number}, {animalId} : {animalId: number}) =>
 				nestHaluxActions(nested, fetchAnimatls)({clientId}, {animalId})
+			const result = deepNest({clientId: 1}, {animalId: 2})
+			const halux = result.payload[haluxSymbol];
+			
+			expect(result.type).to.equal(haluxActionType);
+			expect(halux).to.have.length(3);
+			expect(halux[0]).to.eql(fetchRoot().payload[haluxSymbol][0])
+			expect(halux[1]).to.eql(fetchClients({clientId: 1}).payload[haluxSymbol][0])
+			expect(halux[2]).to.eql(fetchAnimatls({animalId: 2}).payload[haluxSymbol][0])
 		})
 	})
 })

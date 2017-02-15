@@ -6,7 +6,6 @@ type func = (...args: any[]) => HaluxActionI
 
 export const nestHaluxActions = (parent: (...args: any[]) => HaluxActionI, child: (...args: any[]) => HaluxActionI) => {
 	return (...values: any[]): HaluxActionI => {
-		console.log(values)
 		return {
 			type: haluxActionType,
 			payload: {
