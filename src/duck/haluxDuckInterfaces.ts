@@ -1,6 +1,6 @@
-import { SET_STORE } from './haluxTypes';
+import { SET_STORE } from "./haluxTypes";
 
 export interface HaluxSetStoreActionI {
-	type: SET_STORE,
-	payload: any
+	type: SET_STORE;
+	payload: any;
 }

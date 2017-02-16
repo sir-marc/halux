@@ -1,8 +1,8 @@
-import { HaluxActionI, HaluxActionCreatorI, HaluxActionObjectI } from '../interfaces/HaluxActionInterface';
-import { haluxActionType } from '../constants/haluxActionType'
-import { haluxSymbol, createHaluxAction } from './createHaluxAction';
+import { HaluxActionI, HaluxActionCreatorI, HaluxActionObjectI } from "../interfaces/HaluxActionInterface";
+import { haluxActionType } from "../constants/haluxActionType";
+import { haluxSymbol, createHaluxAction } from "./createHaluxAction";
 
-type func = (...args: any[]) => HaluxActionI
+type func = (...args: any[]) => HaluxActionI;
 
 export const nestHaluxActions = (parent: (...args: any[]) => HaluxActionI, child: (...args: any[]) => HaluxActionI) => {
 	return (...values: any[]): HaluxActionI => {
@@ -14,6 +14,6 @@ export const nestHaluxActions = (parent: (...args: any[]) => HaluxActionI, child
 					...child(...values.slice(-1)).payload[haluxSymbol]
 				]
 			}
-		}
-	}
-}
+		};
+	};
+};

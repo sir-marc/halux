@@ -3,7 +3,7 @@ import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
 import { nestHaluxActions } from '../../src/middleware/nestHaluxActions';
 import { createHaluxAction, haluxSymbol } from '../../src/middleware/createHaluxAction';
-import { haluxActionType } from '../../src/constants/haluxActionType'
+import { haluxActionType } from '../../src/middleware/constants/haluxActionType'
 
 chai.use(sinonChai);
 
