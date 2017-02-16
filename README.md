@@ -18,6 +18,8 @@ Setup your HAL config and then install this module using:
 $ npm install -S halux
 ```
 
+For the following examples i use the config used by Hal-Crawler.
+
 ### create a Halux action
 We provide a helper method for you to create a Halux action.
 Allthough it's not necessary, we highly recommend using it.
@@ -42,16 +44,86 @@ You can use the method something like this:
 ```
 import { createHaluxAction } from 'halux';
 
-const fetchClients = () => createHaluxAction({
-	schema: ClientSchema,
+const fetchRoot = () => createHaluxAction({
+	schema: root,
+	identifiers: undefined
+});
+
+const fetchAdmins = ({ clientId: id} ) => createHaluxAction({
+	schema: admins,
 	identifiers: {
-		client: 'clientId'
+		id,
 	},
 	handlers: {
-		errorHandler: fetchClientsFailure(),
+		errorHandler: (error) => console.log(error.toString())
 	}
+});
+```
+
+###nestHaluxActions
+Because each Schema must be inside the rootschema, nesting actions is need.
+You can use the provided `nestHaluxActions` method to do so.
+It is possible to nest data as many layers deep as you need to, but only one level per method called
+
+The interface is:
+ ```
+const nested = nestHaluxActions(
+	() => createHaluxAction({...}), 
+	() => createHaluxAction({...})
+);
+
+nested({}, {}); // one object per method
+ ```
+
+Example using the above setup:
+```
+const nestedAdmins = (client) => nestHaluxActions(fetchRoot, fetchAdmins)({}, client);
+
+// now you would dispatch this action like this:
+dispatch(nestedAdmins({ clientId: 1 }))
+```
+
+
+###Reducer
+This library provides it's own reducer which you should insert into your state.
+The reducer knows how to handle the actions created by the middleware and updates the store accordingly.
+It is not recommended to a custom reducer for managing those actions as it's considered as an internal feature and may change.
+To use the reducer import `haluxReducer` from the middleware and combine it into your store.
+
+Example:
+
+```
+import { combineReducers } from 'redux';
+import { haluxReducer } from 'halux';
+
+export const store = combineReducers({
+	app: {}, // your app state
+	data: combineReducers({
+		halux: haluxReducer,
+		somethingOther: {},
+	})
 })
 ```
 
+###Middleware
+Finally you have to add the middleware.
+There is a helper method to create the middleware which you must use.
+It accepts the hal-crawler config as the first parameter and the location of the halux store inside the store as a second parameter.
+The location must be a string and may be something like this: `'data.halux'`.
+The helper function returns the middleware which can be passed to the createStore method.
+
+```
+import { createHalux } from 'halux';
+import { createStore, applyMiddleware } from 'redux';
+
+const haluxMiddleware = createHalux(config, 'data.halux');
+
+const store = createStore(
+  reducers,
+  undefined,
+  applyMiddleware(haluxMiddleware)
+)
+
+```
 
    [HalCrawler]: https://github.com/StuckiSimon/HalCrawler
