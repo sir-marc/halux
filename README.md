@@ -1,4 +1,4 @@
-# Work in progres
+# Work in Progress
 Don't try to use this middleware right now. Work is still in progress.
 If you're interested don't hesitate to talk with us and tell us about your use case.
 
@@ -68,7 +68,7 @@ It is possible to nest data as many layers deep as you need to, but only one lev
 The interface is:
  ```
 const nested = nestHaluxActions(
-	() => createHaluxAction({...}), 
+	() => createHaluxAction({...}),
 	() => createHaluxAction({...})
 );
 
