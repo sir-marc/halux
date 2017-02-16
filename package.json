@@ -2,11 +2,11 @@
   "name": "halux",
   "version": "0.0.0-beta.0",
   "description": "Halux middleware for Redux",
-  "main": "dist/index.js",
+  "main": "bin/index.js",
   "scripts": {
     "test": "karma start",
     "test:w": "npm t -- --auto-watch --watch",
-    "build": "tsc",
+    "build": "tsc --outdir ./bin",
     "dts-gen": "dts-bundle",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "prepublish": "npm run build",
