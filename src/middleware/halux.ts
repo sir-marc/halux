@@ -1,5 +1,5 @@
 import * as Immutable from 'immutable';
-import { deepFind } from 'deep-find';
+import deepFind from 'deep-find';
 import { HaluxActionI, HaluxActionObjectI } from '../interfaces/HaluxActionInterface';
 import { haluxSymbol } from './createHaluxAction';
 import { crawl, HalCrawlerConfigMap, Resource, Command, getResourceFromStore, action } from 'hal-crawler';
