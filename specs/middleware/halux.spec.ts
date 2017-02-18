@@ -38,12 +38,18 @@ describe('the halux middleware', () => {
 				}
 			});
 
+			const fakeStore = {
+				data: {
+					halux: {},
+				},
+				dispatch: sinon.spy()
+			};
 
 			const nestedAdmins = (client: {id: number}) => nestHaluxActions(fetchRoot, fetchAdmins)({}, client);
 
 			const adminsAction = nestedAdmins({id: 2});
 
-			createHalux(config)(undefined)(() => {})(adminsAction);
+			createHalux(config)(fakeStore)(() => {})(adminsAction);
 
 			// const deepNest = ({clientId} : {clientId: number}, {animalId} : {animalId: number}) =>
 			// 	nestHaluxActions(nested, fetchAnimatls)({clientId}, {animalId})
