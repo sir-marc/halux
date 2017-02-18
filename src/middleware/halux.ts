@@ -29,7 +29,6 @@ export const createHalux = (halCrawlerConfig: HalCrawlerConfigMap) => {
 			const [ head, ...tail ] = actions;
 
 			const done = (newStore: Immutable.Map<string, any>) => {
-				console.log(newStore.toJS());
 				store.dispatch(haluxActions.setStore(store));
 			};
 
