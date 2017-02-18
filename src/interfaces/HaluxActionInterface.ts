@@ -1,4 +1,4 @@
-import { Schema } from "hal-crawler";
+import { Schema } from 'hal-crawler';
 
 export interface HaluxActionObjectI {
 	schema: Schema;

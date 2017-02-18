@@ -1,8 +1,9 @@
-import * as Immutable from "immutable";
-import { HaluxActionI, HaluxActionObjectI } from "../interfaces/HaluxActionInterface";
-import { haluxSymbol } from "./createHaluxAction";
-import { crawl, HalCrawlerConfigMap, Resource, Command, getResourceFromStore, action } from "hal-crawler";
-import { haluxActions } from "../duck";
+import * as Immutable from 'immutable';
+import * as deepFind from 'deep-find';
+import { HaluxActionI, HaluxActionObjectI } from '../interfaces/HaluxActionInterface';
+import { haluxSymbol } from './createHaluxAction';
+import { crawl, HalCrawlerConfigMap, Resource, Command, getResourceFromStore, action } from 'hal-crawler';
+import { haluxActions } from '../duck';
 
 const scramble = (
 	config: HalCrawlerConfigMap,
@@ -22,17 +23,17 @@ const scramble = (
 	}
 };
 
-export const createHalux = (halCrawlerConfig: HalCrawlerConfigMap) => {
+export const createHalux = (halCrawlerConfig: HalCrawlerConfigMap, location = 'data.halux') => {
 	return (store: any) => (next: any) => (action: HaluxActionI) => {
 		if ( action && action.payload && action.payload[haluxSymbol]) {
 			const actions = action.payload[haluxSymbol];
 			const [ head, ...tail ] = actions;
 
 			const done = (newStore: Immutable.Map<string, any>) => {
-				store.dispatch(haluxActions.setStore(store));
+				store.dispatch(haluxActions.setStore(newStore));
 			};
 
-			scramble(halCrawlerConfig, done, new Command(new Resource(head.schema)), tail, store);
+			scramble(halCrawlerConfig, done, new Command(new Resource(head.schema)), tail, deepFind(store, location));
 
 		}
 		// middleware is not needed

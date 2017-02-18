@@ -110,6 +110,7 @@ Finally you have to add the middleware.
 There is a helper method to create the middleware which you must use.
 It accepts the hal-crawler config as the first parameter and the location of the halux store inside the store as a second parameter.
 The location must be a string and may be something like this: `'data.halux'`.
+It's default value is `data.halux`.
 The helper function returns the middleware which can be passed to the createStore method.
 
 ```
