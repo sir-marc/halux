@@ -1,7 +1,3 @@
-# Work in Progress
-Don't try to use this middleware right now. Work is still in progress.
-If you're interested don't hesitate to talk with us and tell us about your use case.
-
 # halux
 HAL middleware for Redux which uses [HalCrawler] under the hood.
 If your state matches the HAL conventions described in the above Repo, you can use this middleware to load nested HAL resources easily.
