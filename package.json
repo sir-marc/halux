@@ -60,6 +60,6 @@
     "typescript": "^2.1.5"
   },
   "peerDependencies": {
-    "hal-crawler": "0.1.0-alpha.3"
+    "hal-crawler": "0.1.0-alpha.4"
 	}
 }
