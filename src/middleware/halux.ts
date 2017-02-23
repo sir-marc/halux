@@ -43,7 +43,7 @@ export const createHalux = (halCrawlerConfig: HalCrawlerConfigMap, location = 'd
 				store.dispatch(haluxActions.setStore(newStore));
 			};
 
-			scramble(halCrawlerConfig, done, new Command(new Resource(head.schema)), tail, Immutable.Map<string, any>(get(store, location)));
+			scramble(halCrawlerConfig, done, new Command(new Resource(head.schema)), tail, Immutable.Map<string, any>(get(store.getState(), location)));
 
 		}
 		// middleware is not needed
