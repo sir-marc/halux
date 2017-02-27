@@ -1,6 +1,6 @@
 {
   "name": "halux",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "Halux middleware for Redux",
   "main": "bin/index.js",
   "scripts": {
@@ -61,6 +61,6 @@
     "typescript": "^2.1.5"
   },
   "peerDependencies": {
-    "hal-crawler": "0.1.0-alpha.6"
+    "hal-crawler": "0.1.0-beta.1"
   }
 }
