@@ -18,12 +18,17 @@ const scramble = (
 	const resource = getResourceFromStore(state, new Resource(demandedResource.getSchema(), demandedResource.getLink(), demandedResource.getData()));
 	let promise: Promise<{}>;
 	let isFirstToCallForResource = true;
-	// first call to root object (empty state)
 	if(resource === undefined) {
-		const rootResource = new Resource(demandedResource.getSchema());
-		promise = crawl(config, new Command(rootResource, action.GET), state);
-		const newState = putInStoreAsPending(promise, rootResource, state);
-		store.dispatch(haluxActions.setStore(newState));
+		// first call to root object (empty state)
+		if(state.count() === 0) {
+			const rootResource = new Resource(demandedResource.getSchema());
+			promise = crawl(config, new Command(rootResource, action.GET), state);
+			const newState = putInStoreAsPending(promise, rootResource, state);
+			store.dispatch(haluxActions.setStore(newState));
+		} else {
+			// the client might try to ask for links which are not provided by the backend, these must be ignored
+			return;
+		}
 	} else if(resource.isShallow() && !resource.isPending()) {
 		promise = crawl(config, new Command(resource, action.GET), state);
 		const newState = putInStoreAsPending(promise, resource, state);
@@ -43,7 +48,19 @@ const scramble = (
 		}
 		if(actions.length !== 0) {
 			const [ head, ...tail ] = actions;
-			scramble(config, new Command(new Resource(head.schema, undefined, head.identifiers), action.GET), tail, store, location);
+			const parentSchema = demandedResource.getSchema();
+			const schemaInstanceInParent = parentSchema.getChildren().find(child => Array.isArray(child) ? child[0] === head.schema : child === head.schema);
+			let resourceRequest;
+			if(schemaInstanceInParent === undefined || Array.isArray(schemaInstanceInParent)) {
+				resourceRequest = new Resource(head.schema, undefined, head.identifiers);
+			} else {
+				const resource = getResourceFromStore(state, new Resource(parentSchema, demandedResource.getLink(), demandedResource.getData()));
+				resourceRequest = new Resource(head.schema, resource.getChildLink(head.schema), head.identifiers);
+			}
+			// only if either a link or data has been given a load of a resource makes sense - otherwise the resource is not available
+			if(resourceRequest.getLink() !== undefined || resourceRequest.getData() !== undefined) {
+				scramble(config, new Command(resourceRequest, action.GET), tail, store, location);
+			}
 		}
 	});
 };
