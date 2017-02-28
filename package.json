@@ -57,6 +57,7 @@
   "dependencies": {
     "dts-bundle": "^0.7.2",
     "dts-gen": "^0.4.20",
+    "immutable": "^3.8.1",
     "lodash.get": "^4.4.2",
     "typescript": "^2.1.5"
   },
