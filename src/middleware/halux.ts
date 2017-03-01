@@ -50,17 +50,26 @@ const scramble = (
 			const [ head, ...tail ] = actions;
 			const parentSchema = demandedResource.getSchema();
 			const schemaInstanceInParent = parentSchema.getChildren().find(child => Array.isArray(child) ? child[0] === head.schema : child === head.schema);
-			let resourceRequest;
-			if(schemaInstanceInParent === undefined || Array.isArray(schemaInstanceInParent)) {
-				resourceRequest = new Resource(head.schema, undefined, head.identifiers);
+			const isMappedAsList = Array.isArray(schemaInstanceInParent);
+			let resourceRequests = [];
+			if(isMappedAsList && head.identifiers === undefined) {
+				const resource = getResourceFromStore(state, new Resource(parentSchema, demandedResource.getLink(), demandedResource.getData()));
+				const childLinks = resource.getChildLink(head.schema);
+				if(childLinks !== undefined) {
+					resourceRequests = childLinks.map((link: any) => new Resource(head.schema, link, undefined));
+				}
+			} else if(schemaInstanceInParent === undefined || isMappedAsList) {
+				resourceRequests.push(new Resource(head.schema, undefined, head.identifiers));
 			} else {
 				const resource = getResourceFromStore(state, new Resource(parentSchema, demandedResource.getLink(), demandedResource.getData()));
-				resourceRequest = new Resource(head.schema, resource.getChildLink(head.schema), head.identifiers);
+				resourceRequests.push(new Resource(head.schema, resource.getChildLink(head.schema), head.identifiers));
 			}
-			// only if either a link or data has been given a load of a resource makes sense - otherwise the resource is not available
-			if(resourceRequest.getLink() !== undefined || resourceRequest.getData() !== undefined) {
-				scramble(config, new Command(resourceRequest, action.GET), tail, store, location);
-			}
+			resourceRequests.forEach((resourceRequest : any) => {
+				// only if either a link or data has been given a load of a resource makes sense - otherwise the resource is not available
+				if(resourceRequest.getLink() !== undefined || resourceRequest.getData() !== undefined) {
+					scramble(config, new Command(resourceRequest, action.GET), tail, store, location);
+				}
+			});
 		}
 	});
 };

@@ -22,7 +22,7 @@ const mergeState = (previous: any, newState: any) => {
 					} else {
 						if(resource.isNewerAs(previousResource)) {
 							stateToReturn = stateToReturn.updateIn([key], (schemas: any) => {
-								schemas.delete(previousResource);
+								schemas = schemas.delete(previousResource);
 		            return schemas.add(resource);
 		          });
 						}
