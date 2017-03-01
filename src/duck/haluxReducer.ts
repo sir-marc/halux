@@ -13,8 +13,6 @@ const mergeState = (previous: any, newState: any) => {
 			stateToReturn = stateToReturn.set(key, schemaEntrySet);
 		} else {
 			if(Immutable.Iterable.isIterable(previousEntrySet)) {
-				// TODO: might be, that some sub resources changed - this must be handled
-				//stateToReturn = stateToReturn.set(key, schemaEntrySet);
 				schemaEntrySet.forEach((resource :any) => {
 					const previousResource = previousEntrySet.find((previousResource :any) => resource.isModellingSameResourceAs(previousResource));
 					if(previousResource === undefined) {
