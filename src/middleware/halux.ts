@@ -10,7 +10,8 @@ const scramble = (
 	command: Command,
 	actions: HaluxActionObjectI[],
 	store: any,
-	location: string
+	location: string,
+	handlers: any
 ): any => {
 	const state = Immutable.Map<string, any>(get(store.getState(), location));
 
@@ -41,7 +42,14 @@ const scramble = (
 		promise = Promise.resolve(state);
 	}
 
+	if(handlers && handlers.pendingHandler) {
+		handlers.pendingHandler();
+	}
+
 	promise.then((state:any) => {
+		if(handlers && handlers.successHandler) {
+			handlers.successHandler(state);
+		}
 		// another call has already posted the changes to the state - therefore we don't have to do it again
 		if(isFirstToCallForResource) {
 			store.dispatch(haluxActions.setStore(state));
@@ -67,9 +75,16 @@ const scramble = (
 			resourceRequests.forEach((resourceRequest : any) => {
 				// only if either a link or data has been given a load of a resource makes sense - otherwise the resource is not available
 				if(resourceRequest.getLink() !== undefined || resourceRequest.getData() !== undefined) {
-					scramble(config, new Command(resourceRequest, action.GET), tail, store, location);
+					scramble(config, new Command(resourceRequest, action.GET), tail, store, location, head.handlers);
 				}
 			});
+		}
+	}).catch((err: any) => {
+		if(handlers && handlers.errorHandler) {
+			handlers.errorHandler(err);
+		} else {
+			// if no error handler has been configured the error will be logged to the console
+			console.error(err);
 		}
 	});
 };
@@ -80,7 +95,7 @@ export const createHalux = (halCrawlerConfig: HalCrawlerConfigMap, location = 'd
 			const actions = action.payload[haluxSymbol];
 			const [ head, ...tail ] = actions;
 
-			scramble(halCrawlerConfig, new Command(new Resource(head.schema)), tail, store, location);
+			scramble(halCrawlerConfig, new Command(new Resource(head.schema)), tail, store, location, head.handlers);
 
 		}
 		// middleware is not needed
