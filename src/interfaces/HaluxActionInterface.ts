@@ -5,10 +5,13 @@ export interface HaluxActionObjectI {
 	identifiers: {
 		[index: string]: any,
 	};
+	body: any;
+	into: Schema;
+	overwriteStore: boolean;
 	handlers?: {
-		successHandler?: (obj: any) => any,
-		pendingHandler?: () => any,
-		errorHandler?: (error: any) => any,
+		successHandler?: (store: any, haluxState: any) => any,
+		pendingHandler?: (store: any) => any,
+		errorHandler?: (store: any, error: any) => any,
 	};
 }
 

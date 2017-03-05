@@ -30,14 +30,14 @@ The interface for this action is:
 		[index: string]: any, // an object of identifiers to identify the different Ressources
 	},
 	handlers?: { // handler to be called on a particular event. Can be a redux-action or a regular function
-		successHandler?: (obj: any) => any,
-		pendingHandler?: () => any,
-		errorHandler?: (error: any) => any,
+		successHandler?: (reduxStore: any, haluxState: any) => any,
+		pendingHandler?: (reduxStore: any) => any,
+		errorHandler?: (reduxStore: any, error: any) => any,
 	}
 }): HaluxActionI
 ```
 
-You can use the method something like this:
+You can use the method like this:
 
 ```
 import { createHaluxAction } from 'halux';
@@ -53,7 +53,7 @@ const fetchAdmins = ({ clientId: id} ) => createHaluxAction({
 		id,
 	},
 	handlers: {
-		errorHandler: (error) => console.log(error.toString())
+		errorHandler: (reduxStore, error) => console.log(error.toString())
 	}
 });
 ```
