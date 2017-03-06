@@ -1,6 +1,6 @@
 {
   "name": "halux",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Halux middleware for Redux",
   "main": "bin/index.js",
   "scripts": {
@@ -34,6 +34,7 @@
   "devDependencies": {
     "@types/chai": "^3.4.34",
     "@types/lodash.get": "^4.4.1",
+    "@types/lodash.isempty": "^4.4.1",
     "@types/mocha": "^2.2.39",
     "@types/sinon": "^1.16.34",
     "@types/sinon-chai": "^2.7.27",
@@ -59,9 +60,10 @@
     "dts-gen": "^0.4.20",
     "immutable": "^3.8.1",
     "lodash.get": "^4.4.2",
+    "lodash.isempty": "^4.4.0",
     "typescript": "^2.1.5"
   },
   "peerDependencies": {
-    "hal-crawler": "0.1.0-beta.8"
+    "hal-crawler": "0.1.0-beta.9"
   }
 }

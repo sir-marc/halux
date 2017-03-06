@@ -1,5 +1,6 @@
 import * as Immutable from 'immutable';
 import get = require('lodash.get');
+import isEmpty = require('lodash.isempty');
 import { HaluxActionI, HaluxActionObjectI } from '../interfaces/HaluxActionInterface';
 import { haluxSymbol } from './createHaluxAction';
 import { crawl, HalCrawlerConfigMap, Resource, Command, getResourceFromStore, action, putInStoreAsPending } from 'hal-crawler';
@@ -61,7 +62,7 @@ const scramble = (
 			const schemaInstanceInParent = parentSchema.getChildren().find(child => Array.isArray(child) ? child[0] === head.schema : child === head.schema);
 			const isMappedAsList = Array.isArray(schemaInstanceInParent);
 			let resourceRequests = [];
-			if(isMappedAsList && head.identifiers === undefined) {
+			if(isMappedAsList && (head.identifiers === undefined || isEmpty(head.identifiers))) {
 				const resource = getResourceFromStore(state, new Resource(parentSchema, demandedResource.getLink(), demandedResource.getData()));
 				const childLinks = resource.getChildLink(head.schema);
 				if(childLinks !== undefined) {
