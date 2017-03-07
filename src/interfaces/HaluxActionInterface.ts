@@ -2,17 +2,19 @@ import { Schema } from 'hal-crawler';
 
 export interface HaluxActionObjectI {
 	schema: Schema;
-	identifiers: {
+	identifiers?: {
 		[index: string]: any,
 	};
-	body: any;
-	into: Schema;
-	overwriteStore: boolean;
+	link?: string;
+	body?: any;
+	into?: Schema;
+	overwriteStore?: boolean;
 	handlers?: {
 		successHandler?: (store: any, haluxState: any) => any,
 		pendingHandler?: (store: any) => any,
 		errorHandler?: (store: any, error: any) => any,
 	};
+	config?: any;
 }
 
 export interface HaluxActionI {

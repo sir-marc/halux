@@ -26,16 +26,22 @@ Although it's not necessary, we highly recommend using it.
 The interface for this action is:
 (haluxObject: {
 	schema: Schema, // a Hal-crawler Schema
-	identifiers: {
-		[index: string]: any, // an object of identifiers to identify the different Ressources
+	link?: string, // url to resource
+	identifiers?: {
+		[index: string]: any, // an object of identifiers to identify the different Resources
 	},
+	body?: any; // if body is set, then a post will be executed using the body
+	into?: Schema; // defines in which schema the result should be stored
+	overwriteStore?: boolean; // ignore state in store and always refetch resource, default: false
 	handlers?: { // handler to be called on a particular event. Can be a redux-action or a regular function
-		successHandler?: (reduxStore: any, haluxState: any) => any,
+		successHandler?: (reduxStore: any, haluxState: any, createdResource: Resource) => any,
 		pendingHandler?: (reduxStore: any) => any,
 		errorHandler?: (reduxStore: any, error: any) => any,
 	}
+	config?: any; // pass custom configuration object, nested calls will receive the same config object
 }): HaluxActionI
 ```
+Note that only identifiers or link should be set, not both.
 
 You can use the method like this:
 

@@ -50,7 +50,9 @@ const scramble = (
 
 	promise.then((state:any) => {
 		if(handlers && handlers.successHandler) {
-			handlers.successHandler(store, state);
+			const parentSchema = command.getDestinationSchema();
+			let parentResource = getResourceFromStore(state, new Resource(parentSchema, demandedResource.getLink(), demandedResource.getData()));
+			handlers.successHandler(store, state, parentResource);
 		}
 		// another call has already posted the changes to the state - therefore we don't have to do it again
 		if(isFirstToCallForResource) {
@@ -62,14 +64,14 @@ const scramble = (
 			const schemaInstanceInParent = parentSchema.getChildren().find(child => Array.isArray(child) ? child[0] === head.schema : child === head.schema);
 			const isMappedAsList = Array.isArray(schemaInstanceInParent);
 			let resourceRequests = [];
-			if(isMappedAsList && (head.identifiers === undefined || isEmpty(head.identifiers))) {
+			if(isMappedAsList && (head.identifiers === undefined || isEmpty(head.identifiers) && head.link === undefined)) {
 				const resource = getResourceFromStore(state, new Resource(parentSchema, demandedResource.getLink(), demandedResource.getData()));
 				const childLinks = resource.getChildLink(head.schema);
 				if(childLinks !== undefined) {
 					resourceRequests = childLinks.map((link: any) => new Resource(head.schema, link, undefined));
 				}
 			} else if(schemaInstanceInParent === undefined || isMappedAsList) {
-				resourceRequests.push(new Resource(head.schema, undefined, head.identifiers));
+				resourceRequests.push(new Resource(head.schema, head.link, head.identifiers));
 			} else {
 				const resource = getResourceFromStore(state, new Resource(parentSchema, demandedResource.getLink(), demandedResource.getData()));
 				resourceRequests.push(new Resource(head.schema, resource.getChildLink(head.schema), head.identifiers));
@@ -77,7 +79,7 @@ const scramble = (
 			resourceRequests.forEach((resourceRequest : any) => {
 				// only if either a link or data has been given a load of a resource makes sense - otherwise the resource is not available
 				if(resourceRequest.getLink() !== undefined || resourceRequest.getData() !== undefined) {
-					scramble(config, new Command(resourceRequest, head.body === undefined ? action.GET : action.POST, head.into, head.body), tail, store, location, head.handlers, head.overwriteStore);
+					scramble(head.config || config, new Command(resourceRequest, head.body === undefined ? action.GET : action.POST, head.into, head.body), tail, store, location, head.handlers, head.overwriteStore);
 				}
 			});
 		}
@@ -97,7 +99,7 @@ export const createHalux = (halCrawlerConfig: HalCrawlerConfigMap, location = 'd
 			const actions = action.payload[haluxSymbol];
 			const [ head, ...tail ] = actions;
 
-			scramble(halCrawlerConfig, new Command(new Resource(head.schema)), tail, store, location, head.handlers, head.overwriteStore);
+			scramble(head.config || halCrawlerConfig, new Command(new Resource(head.schema, head.link, head.identifiers)), tail, store, location, head.handlers, head.overwriteStore);
 
 		}
 		// middleware is not needed
